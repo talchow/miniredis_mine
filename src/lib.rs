@@ -1,11 +1,8 @@
-mod get;
+pub mod get;
 pub use get::do_get;
 
-mod set;
+pub mod set;
 pub use set::do_set;
 
-mod input_handle;
-pub use input_handle::input_handle;
-
-// mod client;
-// pub use client::Client;
+pub mod input_handle;
+pub use input_handle::handle;

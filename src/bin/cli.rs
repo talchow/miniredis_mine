@@ -4,12 +4,12 @@
 // 3.打印出值
 
 use std::io::{self, stdout, Write};
-mod set;
-mod get;
-mod input_handle;
-use input_handle::input_handle;
-use set::do_set;
-use get::do_get;
+// mod set;
+// mod get;
+use cli_for_miniredis::input_handle;
+use input_handle::handle;
+// use set::do_set;
+// use get::do_get;
 
 // const ADDR:usize = "127.0.0.1:6379";
 #[tokio::main]
@@ -26,7 +26,7 @@ async fn main() {
         let lowercase_input = input.trim().to_lowercase();
         let input_vec:Vec<&str> = lowercase_input.split(' ').collect();
 
-        input_handle(input_vec).await;
+        handle(input_vec).await;
     }
 }
 
