@@ -1,3 +1,6 @@
+// first of all,check the first element is get/set,otherwise break as the input format is error
+// if get,call the fn do_get
+// if set,split the key and value with \o\v
 use crate::do_get;
 use crate::do_set;
 pub async fn handle(input_vec: Vec<&str>) {
