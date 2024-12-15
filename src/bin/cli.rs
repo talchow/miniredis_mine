@@ -16,6 +16,8 @@ use input_handle::handle;
 async fn main() {
     loop {
         let mut input = String::new();
+        let user_hint = r"\e\d"; 
+        println!("Please insert {user_hint} between command and each element!");
         print!("> ");
         let _ = stdout().flush();
         if let Err(err) = io::stdin().read_line(&mut input) {
@@ -24,7 +26,7 @@ async fn main() {
         };
         
         let lowercase_input = input.trim().to_lowercase();
-        let input_vec:Vec<&str> = lowercase_input.split(' ').collect();
+        let input_vec:Vec<&str> = lowercase_input.split(r"\e\d").collect();
 
         handle(input_vec).await;
     }
