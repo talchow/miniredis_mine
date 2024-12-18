@@ -5,10 +5,10 @@ use tokio::{
     net::TcpStream,
 };
 
-pub async fn do_get(key: &str) {
-    println!("connecting!");
-    let mut stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
-    println!("connected!");
+pub async fn do_get(key: &str,mut stream:TcpStream) {
+    // println!("connecting!");
+    // let mut stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
+    // println!("connected!");
 
     // let bulk_get = format!("$3\r\nget\r\n");
     // let bulk_key = format!("${}\r\n{key}\r\n", key.len());

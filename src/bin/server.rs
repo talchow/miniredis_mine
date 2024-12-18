@@ -30,6 +30,7 @@ async fn main() {
 async fn process(mut socket:TcpStream,db:Db) {
     let mut buf = BytesMut::new();
    let _ = socket.read_buf(&mut buf).await;
+   println!("reach here");
     loop {
         let frame:Vec<u8>= match buf.get_u8() {
             b'*' => {
