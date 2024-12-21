@@ -33,45 +33,44 @@
 //         let lowercase_input = input.trim().to_lowercase();
 //         let input_vec:Vec<&str> = lowercase_input.split(r"\e\d").collect();
 
+// use std::ffi::OsString;
 //         handle(input_vec).await;
 //     }
 // }
-
-use bytes::Bytes;
-use clap::{Parser, Subcommand};
-use cli_for_miniredis::{do_get, do_set, get, set};
-use tokio::net::TcpStream;
+//  use std::{ffi::OsStr, os::unix::ffi::OsStrExt};
+use std::io::stdin;
+use clap::Parser;
+use cli_for_miniredis::{do_get, do_set};
 
 #[derive(Parser, Debug)]
-struct Cli {
-    #[clap(subcommand)]
-    command: Command,
-}
-#[derive(Subcommand, Debug)]
+#[command(no_binary_name(true))]
 enum Command {
-    Get { key: String, },
-
-    Set { key: String, value: String, },
+    Get { key: String },
+    Set { key: String, value: String },
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("reach to line 59");
 
-    let stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
+    // let mut stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
     println!("reach to line 62");
+    
+    println!("> ");
 
     loop {
-        let cli = Cli::parse();
+        let mut input = String::new();
+        stdin().read_line(&mut input)?;
+        println!("input: {input}");
 
-        let stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
+        let command = Command::parse_from(input.clone().trim().split(' '));
 
-        println!("parse the args: {cli:?}");
+        println!("parse the args: {command:?}");
 
-        match cli.command {
-            Command::Get { key } => do_get(&key, stream).await,
+        match command {
+            Command::Get { key } => do_get(&key).await?,
 
-            Command::Set { key, value } => do_set(&key, &value, stream).await,
+            Command::Set { key, value } => do_set(&key, &value).await?,
         }
     }
 }

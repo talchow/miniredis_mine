@@ -1,8 +1,11 @@
 use tokio::{io::AsyncWriteExt, net::TcpStream};
+use std::error::Error;
 
-pub async fn do_set(key: &str, value: &str,mut stream:TcpStream) {
+
+pub async fn do_set(key: &str, value: &str) -> Result<(),Box<dyn Error>>{
     // println!("connecting!");
-    // let mut stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
+    // let mut stream = TcpStream::connect("127.0.0.1:6379").await;
+    let mut stream =TcpStream::connect("127.0.0.1:6379").await?;
     // println!("connected!");
 
     let bulk_set = format!("$3\r\nset\r\n");
@@ -17,4 +20,5 @@ pub async fn do_set(key: &str, value: &str,mut stream:TcpStream) {
     }
 
     println!("writing bytes!");
+    Ok(())
 }

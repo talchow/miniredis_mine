@@ -1,33 +1,34 @@
 use core::str;
-use std::{collections::HashMap, sync::{Arc, Mutex}};
+use std::{collections::HashMap,sync::{Arc, Mutex}};
 
 use bytes::{Buf, Bytes, BytesMut};
 use tokio::{io::AsyncWriteExt, net::{TcpListener, TcpStream}};
 use tokio::io::AsyncReadExt;
+use std::error::Error;
 
 type Db = Arc<Mutex<HashMap<String,Bytes>>>;
 #[tokio::main]
-async fn main() {
-    let listener = TcpListener::bind("127.0.0.1:6379").await.unwrap();
+async fn main() -> Result<(),Box<dyn Error>>{
+    let listener = TcpListener::bind("127.0.0.1:6379").await?;
 
     println!("Listening!");
 
     let db = Arc::new(Mutex::new(HashMap::new()));
 
     loop {
-        let (socket,_) = listener.accept().await.unwrap();
-
+        let (socket,_) = listener.accept().await?;
+       
         let db:Db = db.clone();
 
         println!("Accepted!");
 
         tokio::spawn(async move {
-            process(socket,db).await;
+            let _ = process(socket,db).await;
         });
     }
 }
 
-async fn process(mut socket:TcpStream,db:Db) {
+async fn process(mut socket:TcpStream,db:Db) -> Result<(),Box<dyn Error>>{
     let mut buf = BytesMut::new();
    let _ = socket.read_buf(&mut buf).await;
    println!("reach here");
@@ -36,11 +37,10 @@ async fn process(mut socket:TcpStream,db:Db) {
             b'*' => {
                 buf.to_vec()
             }
-            _ => break,
+            _ => break Ok(()),
         };
         
-        let err = "the bytes is error".to_string();
-        let frame_string = String::from_utf8(frame).unwrap_or(err);
+        let frame_string = String::from_utf8(frame)?;
         let vec_data:Vec<&str> = frame_string.split("\r\n").collect();
 
         let res = match vec_data[0] {
@@ -49,7 +49,7 @@ async fn process(mut socket:TcpStream,db:Db) {
                 if let Some(value) = db.get(vec_data[4]) {
                     value.clone()
                 }else {
-                    break;
+                    break Ok(());
                 }
             }
             "3" => {
@@ -60,10 +60,10 @@ async fn process(mut socket:TcpStream,db:Db) {
             }
             _ => {
                 println!("frame format is error!");
-                break;
+                break Ok(());
             }
             
         };
-        socket.write_all(&res).await.unwrap();
+        socket.write_all(&res).await?;
     }
 }
