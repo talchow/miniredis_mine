@@ -5,14 +5,10 @@ use std::{
 };
 
 use bytes::{Buf, Bytes, BytesMut};
-use std::error::Error;
-use tokio::io::AsyncReadExt;
-use tokio::{
-    io::AsyncWriteExt,
-    net::{TcpListener, TcpStream},
-};
 use cli_for_miniredis::ProcessError;
-
+use std::error::Error;
+use tokio::io::{AsyncReadExt, AsyncWriteExt};
+use tokio::net::{TcpListener, TcpStream};
 
 type Db = Arc<Mutex<HashMap<String, Bytes>>>;
 #[tokio::main]
@@ -31,13 +27,19 @@ async fn main() -> Result<(), Box<dyn Error>> {
         println!("Accepted!");
 
         tokio::spawn(async move {
-            let _ = process(socket, db).await;
+            if let Err(err) = process(socket, db).await {
+                eprintln!("processor error: {err}");
+                // match err {
+                //   ProcessError::FromUtf8Error()  > x 
+                //   ProcessError::FromUtf8Error()  > x 
+                // }
+            }
         });
     }
 }
 
-
-async fn process(mut socket: TcpStream, db: Db) -> Result<(),ProcessError> {
+async fn process(mut socket: TcpStream, db: Db) -> Result<(), ProcessError> {
+    // type Result<T> = core::result::Result<T, ProcessError>;
     let mut buf = BytesMut::new();
     let _ = socket.read_buf(&mut buf).await;
     println!("reach here");
@@ -52,7 +54,11 @@ async fn process(mut socket: TcpStream, db: Db) -> Result<(),ProcessError> {
 
         let res = match vec_data[0] {
             "2" => {
-                let mut db =db.lock()?;
+                let db = match db.lock() {
+                    Ok(db) => db,
+                    Err(_e) => return Err(ProcessError::PoisonError("DB lock".to_string())),
+                };
+
                 if let Some(value) = db.get(vec_data[4]) {
                     value.clone()
                 } else {
@@ -60,7 +66,9 @@ async fn process(mut socket: TcpStream, db: Db) -> Result<(),ProcessError> {
                 }
             }
             "3" => {
-                let mut db = db.lock()?;
+                let mut db = db
+                    .lock()
+                    .map_err(|_| ProcessError::PoisonError("DB lock".to_string()))?;
                 db.insert(vec_data[4].to_string(), vec_data[6].to_owned().into());
                 "ok".into()
             }
@@ -69,6 +77,11 @@ async fn process(mut socket: TcpStream, db: Db) -> Result<(),ProcessError> {
                 break Ok(());
             }
         };
-        socket.write_all(&res).await?;
+        let _ = match socket.write_all(&res).await {
+            Ok(_) => {
+                println!("writed!");
+            }
+            Err(_e) => return Err(ProcessError::Incomplete),
+        };
     }
 }
