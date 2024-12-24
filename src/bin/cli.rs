@@ -38,9 +38,9 @@
 //     }
 // }
 //  use std::{ffi::OsStr, os::unix::ffi::OsStrExt};
-use std::io::stdin;
 use clap::Parser;
 use cli_for_miniredis::{do_get, do_set};
+use std::io::{stdin, stdout, Write};
 
 #[derive(Parser, Debug)]
 #[command(no_binary_name(true))]
@@ -55,11 +55,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // let mut stream = TcpStream::connect("127.0.0.1:6379").await.unwrap();
     println!("reach to line 62");
-    
-    println!("> ");
+
 
     loop {
         let mut input = String::new();
+        print!("> ");
+        let _ = stdout().flush();
         stdin().read_line(&mut input)?;
         println!("input: {input}");
 
