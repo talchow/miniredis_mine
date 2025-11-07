@@ -64,14 +64,20 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         stdin().read_line(&mut input)?;
         println!("input: {input}");
 
-        let command = Command::parse_from(input.clone().trim().split(' '));
+        // let command = Command::parse_from(input.clone().trim().split(' '));
+        match Command::try_parse_from(input.clone().trim().split(' ')) {
+            Ok(command) => {
+                println!("parse the command: {command:?}");
+                match command {
+                    Command::Get { key } => do_get(&key).await?,
 
-        println!("parse the args: {command:?}");
-
-        match command {
-            Command::Get { key } => do_get(&key).await?,
-
-            Command::Set { key, value } => do_set(&key, &value).await?,
+                    Command::Set { key, value } => do_set(&key, &value).await?,
+                }
+            }
+            Err(_) => {
+                eprintln!("Please input a valid command!\r\nExample: get key\r\n         set key value");
+                continue;
+            }
         }
     }
 }

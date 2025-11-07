@@ -40,15 +40,18 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
 async fn process(mut socket: TcpStream, db: Db) -> Result<(), ProcessError> {
     // type Result<T> = core::result::Result<T, ProcessError>;
+    // 创建一个缓冲区，用于存储从客户端读取的数据
+    // 把socket数据读到buf中
     let mut buf = BytesMut::new();
     let _ = socket.read_buf(&mut buf).await;
     println!("reach here");
+    // 循环处理buf中的数据,如果数据开头是*，则认为是一个完整的frame,写入frame中，否则认为是一个不完整的frame
     loop {
         let frame: Vec<u8> = match buf.get_u8() {
             b'*' => buf.to_vec(),
             _ => break Ok(()),
         };
-
+        // 将frame转换为字符串,并根据"\r\n"分割为vec
         let frame_string = String::from_utf8(frame)?;
         let vec_data: Vec<&str> = frame_string.split("\r\n").collect();
 
