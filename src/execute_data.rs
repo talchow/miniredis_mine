@@ -9,7 +9,7 @@ pub async fn execute_cmd(cmd:&str,db: Db) -> String {
     if vec_data.is_empty() {
         return  "-ERR empty command\r\n".to_string();
     }
-    match vec_data[0] {
+    match vec_data[0].to_ascii_uppercase().as_str() {
       "GET" => get(db,vec_data).await,
         "SET" => set(db,vec_data).await,
         _ => "-ERR unknown command\r\n".to_string(),

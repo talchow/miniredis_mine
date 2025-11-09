@@ -9,3 +9,9 @@ pub use custom_error::ProcessError;
 
 pub mod execute_data;
 pub use execute_data::execute_cmd;
+
+pub mod terminal;
+pub use terminal::Terminal;
+
+pub mod app;
+pub use app::App;

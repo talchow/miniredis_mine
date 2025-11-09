@@ -12,3 +12,24 @@ axum={version="0.8.6",features=["macros"]}
 tokio-util = {version="0.7.17",features=["rt"]}
 hyper = "1.7.0"
 hyper-util = { version="0.1.17", features =["server","tokio"] }
+yew = { version = "0.21.0",features = ["csr"] }
+yew-router = "0.18.0"
+gloo-net = "0.6.0"
+wasm-bindgen-futures = "0.4.55"
+wasm-bindgen = "0.2.105"
+web-sys = { version = "0.3.82", features = ["WebSocket"] }
+serde = { version = "1", features = ["derive"] }
+anyhow = "1"
+js-sys = "0.3.72"
+
+[[bin]]
+name = "web-front"
+path = "src/bin/web_front.rs"
+
+[[bin]]
+name = "cli"
+path = "src/bin/cli.rs"
+
+[[bin]]
+name = "server"
+path = "src/bin/server.rs"
