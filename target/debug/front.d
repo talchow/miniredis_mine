@@ -1,0 +1,1 @@
+/Users/tao/456/miniredis_mine2.0/target/debug/front: /Users/tao/456/miniredis_mine2.0/front/src/app.rs /Users/tao/456/miniredis_mine2.0/front/src/main.rs /Users/tao/456/miniredis_mine2.0/front/src/terminal.rs
