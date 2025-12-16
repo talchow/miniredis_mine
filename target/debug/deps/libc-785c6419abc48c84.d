@@ -1,0 +1,12 @@
+/Users/tao/456/miniredis_mine/target/debug/deps/libc-785c6419abc48c84.d: /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/lib.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/macros.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/fixed_width_ints.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/b64/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/b64/x86_64/mod.rs
+
+/Users/tao/456/miniredis_mine/target/debug/deps/liblibc-785c6419abc48c84.rmeta: /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/lib.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/macros.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/fixed_width_ints.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/b64/mod.rs /Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/b64/x86_64/mod.rs
+
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/lib.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/macros.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/fixed_width_ints.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/mod.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/mod.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/mod.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/b64/mod.rs:
+/Users/tao/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/libc-0.2.167/src/unix/bsd/apple/b64/x86_64/mod.rs:
